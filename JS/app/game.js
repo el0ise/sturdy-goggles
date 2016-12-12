@@ -5,16 +5,22 @@ define(["app/arena"], function(Arena){
     var height = canvas.get(0).height;
 
     var arena = new Arena(width, height); //creates the arena and the snake
-    var unit_length = 10;
+    var unit_length = 25;
+    var score = 0;
+    var speed = ;4
     var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
+
+    var rows = width/unit_length;
+    var columns = height/unit_length;
 
     this.kebab_ingredients = [];
 
     function init(){
         direction = "right";
-
+        new_direction = null;
         the_big_kebab = new Kebab(0,0);
-
+        var gridlist = make_gridlist(rows,columns);
+        gridlist = make_obstructions(gridlist);
         // create initial snake
         // TODO: push one with a skewer
 
@@ -34,6 +40,28 @@ define(["app/arena"], function(Arena){
         // TODO: add ingredient taking into account others' coordinates
         this.kebab_ingredients.append(new Ingredient(type));
 
+    }
+    function make_gridlist(rows,columns){
+        var gridlist = {};
+        for(var r=0; r < rows; r++){
+            for (var c = 0; c <columns; c++) {
+               gridlist[(r,c)]= 0;
+           }
+        }
+        return gridlist;
+    }
+
+    function make_obstructions(gridlist){
+        for(var r=0; r < rows; r=(r+rows-1)){
+            for (var c = 0; c <columns; c=(c+columns-1)) {
+               gridlist[(r,c)]= 5;
+           }
+        }
+        return gridlist;
+    }
+
+    function drop_left_marker(tuple){
+        // TODO
     }
 
     function draw() {

@@ -1,6 +1,8 @@
 define(function(){
     var direction;
-
+    var new_direction = null;
+    var speed = 4;
+    
 	function Kebab(x,y) {
 		this.dx = dx;
 		this.dy = dy;
