@@ -10,7 +10,7 @@ define(function(){
 
     var rows = width/unit_length;
     var columns = height/unit_length;
-
+    var gridlist
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
@@ -18,7 +18,7 @@ define(function(){
     var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
 
     //
-    var condition = ["grill", "fire", "kebab", "ingredient", "left_marker", "right_marker"];
+    var condition = ["grill", "fire", "kebab", "ingredient"];
 
 
     function init(){
@@ -28,19 +28,23 @@ define(function(){
         new_direction = null;
 
         // Create dictionary of grid coordinates -- (x, y): condition
-        var gridlist = make_gridlist(rows,columns);
+        gridlist = make_gridlist(rows,columns);
 
         // Define the borders
-        gridlist = make_obstructions(gridlist);
+        make_obstructions(gridlist);
 
-        // Create snake "head"
-        // TODO: push skewer into kebab_ingredients, change coordinate of skewer (20,12) to (2, 0) in gridlist
+        // Create skewer "head"
+        // push skewer into kebab_ingredients, change coordinate of skewer (20,12) to (2, 0) in gridlist
+        kebab_ingredients.append("tip_right");
 
-
-        // Add 3 random ingredients
+          // Add 3 random ingredients
         for (var i = 0; i < 3; i++ ){
             add_ingredient(get_ran_ingredient());
-            // TODO: change coordinate of ingredient (20-(i+1), 12) to (2, i+1) in gridlist
+            
+
+        define_snake(gridlist);
+
+      
         }
 
     }
@@ -68,6 +72,16 @@ define(function(){
         return gridlist;
     }
 
+    //Defines coordinates to initialise snake
+    function define_snake(gridList){
+        for (var i= 0; i < kebab_ingredients.length; i++){
+         gridlist[(20,12-i)]= (2,i);   
+        }
+    
+    }
+
+    
+
 
     // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
@@ -76,17 +90,7 @@ define(function(){
                gridlist[(r,c)]= 1;
            }
         }
-        return gridlist;
-    }
-
-    // When user hits left key, change coordinate at snake head to 4
-    function drop_left_marker(tuple){
-        // TODO: When user hits left key, change coordinate at snake head to 4
-    }
-
-    // When user hits right key, change coordinate at snake head to 5
-    function drop_right_marker(tuple){
-        // TODO: When user hits right key, change coordinate at snake head to 5
+        
     }
 
 
