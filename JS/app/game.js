@@ -18,11 +18,12 @@ define(function(){
     var ingredient_types = ["tomato", "pineapple", "red_pepper", , "green_pepper, ""onion", "meat"];
 
     //
-    var condition = ["grill", "fire", "kebab", "ingredient"];
+    var condition = ["grill", "fire", "kebab", "active_ingredient"];
 
 
-    function init(){
-        // TODO: clear the board -- empty kebab_ingredients, remove active ingredients
+    function init(rows, columns){
+        // Clear the board (gridlist will be reinstatiated below)
+        kebab_ingredients = [];
 
         direction = "right";
         new_direction = null;
@@ -40,12 +41,9 @@ define(function(){
           // Add 3 random ingredients
         for (var i = 0; i < 3; i++ ){
             add_ingredient(get_ran_ingredient());
-            
-
+        }
         define_snake(gridlist);
 
-      
-        }
 
     }
 
@@ -57,8 +55,20 @@ define(function(){
 
     // Adds given ingredient to ingredient_types
     function add_ingredient(type){
-        // TODO: add ingredient taking into account others' coordinates
+        // Add ingredient to random grid coordinate
+        var random_coord = get_ran_coordinate;
+        while (gridlist[random_coord] != 0){
+            random_coord = get_ran_coordinate;
+        }
+        gridlist[random_coord] = 3;
+
+        // Add ingredient to kebab_ingredients
         this.kebab_ingredients.append(new Ingredient(type));
+
+    }
+
+    function get_ran_coordinate(rows, columns){
+        return (Math.floor(Math.random()*columns), Math.floor(Math.random()*rows));
     }
 
     // Returns dictionary of grid coordinates and associated condition
@@ -73,9 +83,9 @@ define(function(){
     }
 
     //Defines coordinates to initialise snake
-    function define_snake(gridList){
+    function define_snake(gridlist){
         for (var i= 0; i < kebab_ingredients.length; i++){
-         gridlist[(20,12-i)]= (2,i);   
+         gridlist[(20-i,12)]= (2,i);
         }
     
     }
@@ -90,11 +100,7 @@ define(function(){
                gridlist[(r,c)]= 1;
            }
         }
-<<<<<<< HEAD
-        
-=======
         return gridlist;
->>>>>>> 167387d82cad002cf914be5b8161c9802bbf6a3a
     }
 
 
@@ -122,7 +128,7 @@ define(function(){
 		// TODO: Update gridlist to reflect snake moving in direction of "direction"
 		    // TODO: Check if ingredient will be hit
 		        // TODO: Add ingredient to kebab_ingredients, change the coordinate's condition from 3 to 2
-                // TODO: Add new random ingredient to gridList -- go through gridlist, anything that's a 0
+                // TODO: Add new random ingredient to gridlist -- go through gridlist, anything that's a 0
             // TODO: Check if wall will be hit
 
     }
