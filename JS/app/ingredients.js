@@ -1,4 +1,4 @@
-define(["app/game"], function(gameMath)){
+define(["app/game"], function(game)){
 
     function Ingredient(type,x,y){
         this.x = x;
@@ -6,7 +6,6 @@ define(["app/game"], function(gameMath)){
         this.width = 25;
         this.height = 25;
         this.type = type;
-        this.inSnake = false;
 
     }
 
@@ -37,8 +36,7 @@ define(["app/game"], function(gameMath)){
         draw: function(canvasContext){
             var randomX = Math.floor(Math.random()*40)*width;
             var randomY =Math.floor(Math.random()*24)*height;
-            add()
-        // TODO: draw at a random point if inSnake = false
+
 
         }
 

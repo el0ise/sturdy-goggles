@@ -1,46 +1,63 @@
-define(["app/arena"], function(Arena){
+define(function(){
     var canvas = $("#canvas");
     var context = canvas.get(0).getContext("2d");
     var width = canvas.get(0).width;
     var height = canvas.get(0).height;
 
-    var arena = new Arena(width, height); //creates the arena and the snake
     var unit_length = 25;
     var score = 0;
-    var speed = ;4
-    var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
+    var speed = 4;
 
     var rows = width/unit_length;
     var columns = height/unit_length;
 
+    // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
+    // List of possible ingredient types
+    var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
+
+    //
+    var condition = ["grill", "fire", "kebab", "ingredient", "left_marker", "right_marker"];
+
+
     function init(){
+        // TODO: clear the board -- empty kebab_ingredients, remove active ingredients
+
         direction = "right";
         new_direction = null;
-        the_big_kebab = new Kebab(0,0);
+
+        // Create dictionary of grid coordinates -- (x, y): condition
         var gridlist = make_gridlist(rows,columns);
+
+        // Define the borders
         gridlist = make_obstructions(gridlist);
-        // create initial snake
-        // TODO: push one with a skewer
+
+        // Create snake "head"
+        // TODO: push skewer into kebab_ingredients, change coordinate of skewer (20,12) to (2, 0) in gridlist
 
 
-        // add 4 others
-        for (var i = 0; i < 5; i++ ){
+        // Add 3 random ingredients
+        for (var i = 0; i < 3; i++ ){
             add_ingredient(get_ran_ingredient());
+            // TODO: change coordinate of ingredient (20-(i+1), 12) to (2, i+1) in gridlist
         }
+
     }
 
+    // Returns random ingredient from ingredient_types
     function get_ran_ingredient(){
         return ingredient_types[Math.floor(Math.random()*ingredient_types.length)];
 
     }
 
+    // Adds given ingredient to ingredient_types
     function add_ingredient(type){
         // TODO: add ingredient taking into account others' coordinates
         this.kebab_ingredients.append(new Ingredient(type));
-
     }
+
+    // Returns dictionary of grid coordinates and associated condition
     function make_gridlist(rows,columns){
         var gridlist = {};
         for(var r=0; r < rows; r++){
@@ -51,24 +68,35 @@ define(["app/arena"], function(Arena){
         return gridlist;
     }
 
+
+    // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
         for(var r=0; r < rows; r=(r+rows-1)){
             for (var c = 0; c <columns; c=(c+columns-1)) {
-               gridlist[(r,c)]= 5;
+               gridlist[(r,c)]= 1;
            }
         }
         return gridlist;
     }
 
+    // When user hits left key, change coordinate at snake head to 4
     function drop_left_marker(tuple){
-        // TODO
+        // TODO: When user hits left key, change coordinate at snake head to 4
     }
+
+    // When user hits right key, change coordinate at snake head to 5
+    function drop_right_marker(tuple){
+        // TODO: When user hits right key, change coordinate at snake head to 5
+    }
+
 
     function draw() {
         context.clearRect(0, 0, width, height);
         arena.draw(context);
 
-        // TODO: add LOSER clauses and restart game
+        // TODO: Iterate through gridlist and draw according to condition
+
+
     }
 
     // check keyboard keys and update direction variable
@@ -83,8 +111,11 @@ define(["app/arena"], function(Arena){
     function update() {
         if(typeof game_loop != "undefined") clearInterval(game_loop);
 		game_loop = setInterval(paint, 120);
-		// TODO: check if the wall will be hit
-		// TODO: move in increments of the image size
+		// TODO: Update gridlist to reflect snake moving in direction of "direction"
+		    // TODO: Check if ingredient will be hit
+		        // TODO: Add ingredient to kebab_ingredients, change the coordinate's condition from 3 to 2
+                // TODO: Add new random ingredient to gridList -- go through gridlist, anything that's a 0
+            // TODO: Check if wall will be hit
 
     }
 
