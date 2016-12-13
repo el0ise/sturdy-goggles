@@ -1,4 +1,4 @@
-define(function(){
+define(["jquery"], function(){
     var canvas = $("#canvas");
     var context = canvas.get(0).getContext("2d");
     var width = canvas.get(0).width;
@@ -15,7 +15,7 @@ define(function(){
     this.kebab_ingredients = [];
 
     // List of possible ingredient types
-    var ingredient_types = ["tomato", "pineapple", "red_pepper", , "green_pepper, ""onion", "meat"];
+    var ingredient_types = ["tomato", "pineapple", "red_pepper", "green_pepper", "onion", "meat"];
 
     //
     var condition = ["grill", "fire", "kebab", "active_ingredient"];
