@@ -8,16 +8,22 @@ define(["jquery"], function(){
     var score = 0;
     var speed = 4;
 
-    var rows = width/unit_length;
-    var columns = height/unit_length;
+    var columns = width/unit_length;
+    var rows = height/unit_length;
     var gridlist, direction;
+
+    // Load each image
+    var tomato_image;
+    var meat_image;
+    var onion_image;
+
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
     // List of possible ingredient types
     var ingredient_types = ["tomato", "pineapple", "red_pepper", "green_pepper", "onion", "meat"];
 
-    //
+    // List of possible cell conditions
     var condition = ["grill", "fire", "kebab", "active_ingredient"];
 
 
@@ -49,7 +55,6 @@ define(["jquery"], function(){
     // Returns random ingredient from ingredient_types
     function get_ran_ingredient(){
         return ingredient_types[Math.floor(Math.random()*ingredient_types.length)];
-
     }
 
     // Adds given ingredient to ingredient_types
@@ -73,9 +78,9 @@ define(["jquery"], function(){
     // Returns dictionary of grid coordinates and associated condition
     function make_gridlist(rows,columns){
         var gridlist = {};
-        for(var r=0; r < rows; r++){
+        for(var r = 0; r < rows; r++){
             for (var c = 0; c <columns; c++) {
-               gridlist[(r,c)]= 0;
+               gridlist[(c, r)]= 0;
            }
         }
         return gridlist;
@@ -86,17 +91,15 @@ define(["jquery"], function(){
         for (var i= 0; i < kebab_ingredients.length; i++){
          gridlist[(20-i,12)]= (2,i);
         }
-    
     }
 
-    
 
 
     // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
-        for(var r=0; r < rows; r=(r+rows-1)){
-            for (var c = 0; c <columns; c=(c+columns-1)) {
-               gridlist[(r,c)]= 1;
+        for(var r = 0; r < rows; r = (r+rows-1)){
+            for (var c = 0; c < columns; c = (c+columns-1)) {
+               gridlist[(c, r)]= 1;
            }
         }
         return gridlist;
@@ -106,8 +109,30 @@ define(["jquery"], function(){
     function draw() {
         context.clearRect(0, 0, width, height);
         arena.draw(context);
-
+        var image_to_draw;
         // TODO: Iterate through gridlist and draw according to condition
+        for (var r = 0; r < rows; r ++){
+            for (var c = 0; c < columns; c ++){
+                var cell_condition = gridlist[(c, r)];
+
+                // If the cell is fire
+                if (cell_condition == 1){
+                    continue;
+                    // TODO: draw fire?
+                }
+
+                // If the cell is part of the kebab
+                else if (cell_condition == 2){
+                    image_to_draw = gridlist[(c, r)][1];
+                    //context.drawImage(image_to_draw); // TODO: this needs to be the image path??? idk!
+                }
+
+                // If the cell is the active ingredient
+                else if (cell_condition == 3){
+                    continue;
+                }
+            }
+        }
 
 
     }
