@@ -10,7 +10,7 @@ define(["jquery"], function(){
 
     var rows = width/unit_length;
     var columns = height/unit_length;
-    var gridlist
+    var gridlist, direction;
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
@@ -26,7 +26,6 @@ define(["jquery"], function(){
         kebab_ingredients = [];
 
         direction = "right";
-        new_direction = null;
 
         // Create dictionary of grid coordinates -- (x, y): condition
         gridlist = make_gridlist(rows,columns);
