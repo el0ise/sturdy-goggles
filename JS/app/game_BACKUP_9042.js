@@ -90,11 +90,6 @@ define(function(){
                gridlist[(r,c)]= 1;
            }
         }
-<<<<<<< HEAD
-        
-=======
-        return gridlist;
->>>>>>> 167387d82cad002cf914be5b8161c9802bbf6a3a
     }
 
 

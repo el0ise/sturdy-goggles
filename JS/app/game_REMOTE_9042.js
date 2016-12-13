@@ -10,7 +10,7 @@ define(function(){
 
     var rows = width/unit_length;
     var columns = height/unit_length;
-    var gridlist
+
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
@@ -28,23 +28,19 @@ define(function(){
         new_direction = null;
 
         // Create dictionary of grid coordinates -- (x, y): condition
-        gridlist = make_gridlist(rows,columns);
+        var gridlist = make_gridlist(rows,columns);
 
         // Define the borders
-        make_obstructions(gridlist);
+        gridlist = make_obstructions(gridlist);
 
-        // Create skewer "head"
-        // push skewer into kebab_ingredients, change coordinate of skewer (20,12) to (2, 0) in gridlist
-        kebab_ingredients.append("tip_right");
+        // Create snake "head"
+        // TODO: push skewer into kebab_ingredients, change coordinate of skewer (20,12) to (2, 0) in gridlist
 
-          // Add 3 random ingredients
+
+        // Add 3 random ingredients
         for (var i = 0; i < 3; i++ ){
             add_ingredient(get_ran_ingredient());
-            
-
-        define_snake(gridlist);
-
-      
+            // TODO: change coordinate of ingredient (20-(i+1), 12) to (2, i+1) in gridlist
         }
 
     }
@@ -72,16 +68,6 @@ define(function(){
         return gridlist;
     }
 
-    //Defines coordinates to initialise snake
-    function define_snake(gridList){
-        for (var i= 0; i < kebab_ingredients.length; i++){
-         gridlist[(20,12-i)]= (2,i);   
-        }
-    
-    }
-
-    
-
 
     // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
@@ -90,11 +76,7 @@ define(function(){
                gridlist[(r,c)]= 1;
            }
         }
-<<<<<<< HEAD
-        
-=======
         return gridlist;
->>>>>>> 167387d82cad002cf914be5b8161c9802bbf6a3a
     }
 
 

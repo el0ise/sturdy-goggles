@@ -15,7 +15,7 @@ define(function(){
     this.kebab_ingredients = [];
 
     // List of possible ingredient types
-    var ingredient_types = ["tomato", "pineapple", "red_pepper", , "green_pepper, ""onion", "meat"];
+    var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
 
     //
     var condition = ["grill", "fire", "kebab", "ingredient"];
@@ -90,11 +90,7 @@ define(function(){
                gridlist[(r,c)]= 1;
            }
         }
-<<<<<<< HEAD
         
-=======
-        return gridlist;
->>>>>>> 167387d82cad002cf914be5b8161c9802bbf6a3a
     }
 
 
