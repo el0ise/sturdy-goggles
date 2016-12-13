@@ -15,10 +15,10 @@ define(function(){
     this.kebab_ingredients = [];
 
     // List of possible ingredient types
-    var ingredient_types = ["tomato", "pineapple", "pepper", "onion", "meat"];
+    var ingredient_types = ["tomato", "pineapple", "red_pepper", , "green_pepper, ""onion", "meat"];
 
     //
-    var condition = ["grill", "fire", "kebab", "ingredient", "left_marker", "right_marker"];
+    var condition = ["grill", "fire", "kebab", "ingredient"];
 
 
     function init(){
@@ -77,16 +77,6 @@ define(function(){
            }
         }
         return gridlist;
-    }
-
-    // When user hits left key, change coordinate at snake head to 4
-    function drop_left_marker(tuple){
-        // TODO: When user hits left key, change coordinate at snake head to 4
-    }
-
-    // When user hits right key, change coordinate at snake head to 5
-    function drop_right_marker(tuple){
-        // TODO: When user hits right key, change coordinate at snake head to 5
     }
 
 
