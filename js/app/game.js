@@ -27,6 +27,7 @@ define(["jquery"], function(){
     var condition = ["grill", "fire", "kebab", "active_ingredient","skewer_tail"];
 
     function init(rows, columns){
+        score = 0;
         game_over = false;
         // Clear the board (gridlist will be reinstatiated below)
         kebab_ingredients = [];
@@ -36,7 +37,7 @@ define(["jquery"], function(){
         // Create nested arrays of grid coordinates [row][column]
         gridlist = make_gridlist(rows,columns);
 
-        // Define the borders -- TODO: I don't think this is being done correctly!
+        // Define the borders
         gridlist = make_obstructions(gridlist);
 
 
@@ -350,9 +351,7 @@ define(["jquery"], function(){
 	     // Start game!
 	     window.requestAnimationFrame(animationLoop);
      });
-    init(rows, columns);
-       //  // Start game!
-    window.requestAnimationFrame(animationLoop);
+
 
 
 })
