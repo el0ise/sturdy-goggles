@@ -1,0 +1,6 @@
+#canvas {
+	background-image:url("images/grill.png");
+	width: 1000;
+	height: 600;
+	border: 1px solid #000000;
+}

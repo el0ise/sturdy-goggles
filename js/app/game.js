@@ -15,6 +15,8 @@ define(["jquery"], function(){
     var gridlist, direction;
     var head_coordinate, r_head, c_head;
 
+    var fps = 30;
+
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
@@ -126,18 +128,18 @@ define(["jquery"], function(){
         }
    }
 
-    function draw_image(x, y, type){
+    function draw_image(r, c, type){
         var image_to_draw = new Image();
         image_to_draw.src= 'css/images/'+ type +'.png';
         image_to_draw.onload = function(){
-            context.drawImage(image_to_draw, x*unit_length, y*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
+            context.drawImage(image_to_draw, c*unit_length, r*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
         }
 
     }
 
 
     function draw() {
-        //context.clearRect(0,0,width,height);
+        context.clearRect(0,0,width,height);
         //context.clearRect(0, 0, width, height);
         //arena.draw(context);
         var image_to_draw;
@@ -150,25 +152,26 @@ define(["jquery"], function(){
                     context.clearRect((r*unit_length),(c*unit_length),unit_length,unit_length);
                     // If the cell is fire
                     if (cell_condition == 1){
-                        continue;
+                        draw_image(r,c,condition[1]);
+                        
                         // TODO: get image of fire
                         //draw_image(condition[1]);
                     }
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
-                        draw_image(c, r, kebab_ingredients[gridlist[r][c][1]]);
+                        draw_image(r,c, kebab_ingredients[gridlist[r][c][1]]);
 
                     }
 
                     // If the cell is the active ingredient
                     else if (cell_condition[0] == 3){
-                        draw_image(c, r, gridlist[r][c][1]);
+                        draw_image(r,c, gridlist[r][c][1]);
                     }
 
                      else if (cell_condition == 4){
-                        draw_image(c, r, condition[4]);
-                        continue;
+                        draw_image(r,c, condition[4]);
+
                     }
                 }
             }
@@ -303,11 +306,10 @@ define(["jquery"], function(){
 	function animationLoop(time) {
 		update();
 		draw();
-		window.requestAnimationFrame(animationLoop);
-        var delay=1000;
-        setTimeout(function() {
-  //your code to be executed after 1 second
-}, delay);
+		setInterval(function() {
+  window.requestAnimationFrame(animationLoop);
+}, 1000/5);
+
 	}
 
   
