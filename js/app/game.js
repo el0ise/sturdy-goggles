@@ -102,7 +102,7 @@ define(["jquery"], function(){
    // Add ingredient to random grid coordinate
     function add_active_ingredient(gridlist){
        var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-
+       console.log(gridlist[random_coord[0]][random_coord[1]]);
        while (gridlist[random_coord[0]][random_coord[1]] != 0){
            random_coord = get_ran_coordinate();
        }
@@ -229,20 +229,22 @@ define(["jquery"], function(){
         r_head = head_coordinate[0];
         if (direction == 'left') {            
             if (gridlist[r_head][c_head-1] == 1) {
-                alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
             }
-            else if (gridlist[r_head][c_head-1][0] == 2) {
-                alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+            else if (gridlist[r_head][c_head-1][0] == 2 && gridlist[r_head][c_head-1][1] != -1) {
+                // console.log("fuck");
+                // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
             }
             else if (gridlist[r_head][c_head-1][0] == 3) {
                 score += 1;
-                kebab_ingredients.push([r_head][c_head-1][1]);
+                kebab_ingredients.push(gridlist[r_head][c_head-1][1]);
                 gridlist[r_head][c_head-1] = [2,-1];
+                add_active_ingredient(gridlist);
                 // TODO: add new active ingredient
 
             }
             else if (gridlist[r_head][c_head-1] == 4) {
-                alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
             }
             else {
                 gridlist[r_head][c_head-1] = [2,-1];
@@ -253,13 +255,14 @@ define(["jquery"], function(){
             if (gridlist[r_head][c_head+1] == 1) {
                 //TODO: DIE DIE DIE
             }
-            else if (gridlist[r_head][c_head+1][0] == 2) {
+            else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
                 // TODO: DIE DIE DIE
             }
             else if (gridlist[r_head][c_head+1][0] == 3) {
                 score += 1;
-                kebab_ingredients.push([r_head][c_head+1][1]);
+                kebab_ingredients.push(gridlist[r_head][c_head+1][1]);
                 gridlist[r_head][c_head+1] = [2,-1];
+                add_active_ingredient(gridlist)
                 // TODO: add new active ingredient
 
             }
@@ -274,13 +277,14 @@ define(["jquery"], function(){
             if (gridlist[r_head-1][c_head] == 1) {
                 return;
             }
-            else if (gridlist[r_head-1][c_head][0] == 2 ) {
+            else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
                 // TODO: DIE DIE DIE
             }
             else if (gridlist[r_head-1][c_head][0] == 3) {
                 score += 1;
-                kebab_ingredients.push([r_head-1][c_head][1]);
+                kebab_ingredients.push(gridlist[r_head-1][c_head][1]);
                 gridlist[r_head-1][c_head] = [2, -1];
+                add_active_ingredient(gridlist);
                 // TODO: add new active ingredient
             }
             else if (gridlist[r_head-1][c_head] == 4 ) {
@@ -295,13 +299,14 @@ define(["jquery"], function(){
             if (gridlist[r_head+1][c_head] == 1) {
                 //TODO: DIE DIE DIE
             }
-            else if (gridlist[r_head+1][c_head][0] == 2) {
+            else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
                 // TODO: DIE DIE DIE
             }
             else if (gridlist[r_head+1][c_head][0] == 3) {
                 score += 1;
-                kebab_ingredients.push([r_head+1][c_head][1]);
+                kebab_ingredients.push(gridlist[r_head+1][c_head][1]);
                 gridlist[r_head-1][c_head] = [2,-1];
+                add_active_ingredient(gridlist);
                 // TODO: add new active ingredient
 
             }
