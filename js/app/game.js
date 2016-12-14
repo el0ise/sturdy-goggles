@@ -118,7 +118,7 @@ define(["jquery"], function(){
     function get_head(gridlist){
        for(var row = 0; row < rows; row++){
             for(var c = 0; c < columns; c++){
-                if(gridlist[row][c] != 2){
+                if(gridlist[row][c][0] != undefined){
                     if(gridlist[row][c][1] == 0){
                         return([row,c]);
                     }
@@ -308,7 +308,7 @@ define(["jquery"], function(){
                 else if (gridlist[r_head+1][c_head][0] == 3) {
                     score += 1;
                     kebab_ingredients.push(gridlist[r_head+1][c_head][1]);
-                    gridlist[r_head-1][c_head] = [2,-1];
+                    gridlist[r_head+1][c_head] = [2,-1];
                     add_active_ingredient(gridlist);
                     // TODO: add new active ingredient
 
