@@ -9,6 +9,7 @@ define(["jquery"], function(){
     var score = 0;
     var speed = 4;
     var ran;
+    var game_over;
 
     var columns = width/unit_length; // number of columns
     var rows = height/unit_length; // number of rows
@@ -27,6 +28,7 @@ define(["jquery"], function(){
     var condition = ["grill", "fire", "kebab", "active_ingredient","skewer_tail"];
 
     function init(rows, columns){
+        game_over = false;
         // Clear the board (gridlist will be reinstatiated below)
         kebab_ingredients = [];
 
@@ -106,9 +108,7 @@ define(["jquery"], function(){
        while (gridlist[random_coord[0]][random_coord[1]] != 0){
            random_coord = get_ran_coordinate();
        }
-       console.log(random_coord);
        gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
-       console.log(gridlist[random_coord[0]]);
    }
 
     //Returns random coordinate
@@ -129,12 +129,12 @@ define(["jquery"], function(){
    }
 
     function drawRotated(r,c,type){
-    context.clearRect(0,0,canvas.width,canvas.height);
-    context.save();
-    context.translate(canvas.width/2,canvas.height/2);
-    context.rotate(180*Math.PI/180);
-    draw_image(-r,-c,type);
-    context.restore();
+        context.clearRect(0,0,canvas.width,canvas.height);
+        context.save();
+        context.translate(canvas.width/2,canvas.height/2);
+        context.rotate(180*Math.PI/180);
+        draw_image(-r,-c,type);
+        context.restore();
 }
     function draw_image(r, c, type){
         var image_to_draw = new Image();
@@ -171,6 +171,12 @@ define(["jquery"], function(){
                         draw_image(r,c,condition[1]);
                     }
 
+                    else if (cell_condition == 4){
+                        context.clearRect(25*c,25*r,25,25);
+                        draw_image(r,c, condition[4]);
+
+                    }
+
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
                         clear_image(r,c);
@@ -183,11 +189,7 @@ define(["jquery"], function(){
                         draw_image(r,c, gridlist[r][c][1]);
                     }
 
-                     else if (cell_condition == 4){
-                        context.clearRect(25*c,25*r,25,25);
-                        draw_image(r,c, condition[4]);
 
-                    }
                 }
                 if(cell_condition == 0){
                     context.clearRect(25*c,25*r,25,25);
@@ -209,13 +211,16 @@ define(["jquery"], function(){
     function move_snake(gridlist){
         for(var r = 0; r < rows; r++){
            for(var c = 0; c < columns; c++){
+
                 if (gridlist[r][c] == 4) {
                     gridlist[r][c] = 0;
                 }
                 else if(gridlist[r][c][0] == 2){
-                    gridlist[r][c][1] = gridlist[r][c][1] +1;
-                    if(gridlist[r][c][1] >= kebab_ingredients.length ){
+                    if (gridlist[r][c][1] + 1 >= kebab_ingredients.length){
                         gridlist[r][c] = 4;
+                    }
+                    else {
+                        gridlist[r][c][1] += 1;
                     }
                 }
             }
@@ -223,11 +228,10 @@ define(["jquery"], function(){
     }
 
     function update() {
-
         head_coordinate = get_head(gridlist);
         c_head = head_coordinate[1];
         r_head = head_coordinate[0];
-        if (direction == 'left') {            
+        if (direction == 'left') {
             if (gridlist[r_head][c_head-1] == 1) {
                 // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
             }
@@ -244,6 +248,7 @@ define(["jquery"], function(){
 
             }
             else if (gridlist[r_head][c_head-1] == 4) {
+
                 // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
             }
             else {
@@ -253,8 +258,9 @@ define(["jquery"], function(){
         }
         else if (direction=='right') {
             if (gridlist[r_head][c_head+1] == 1) {
-                //TODO: DIE DIE DIE
+                game_over = true;
             }
+
             else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
                 // TODO: DIE DIE DIE
             }
@@ -267,7 +273,7 @@ define(["jquery"], function(){
 
             }
             else if (gridlist[r_head][c_head+1] == 4) {
-                // TODO: DIE DIE DIE
+                game_over = true;
             }
             else {
                 gridlist[r_head][c_head+1] = [2,-1];
@@ -277,6 +283,7 @@ define(["jquery"], function(){
             if (gridlist[r_head-1][c_head] == 1) {
                 return;
             }
+
             else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
                 // TODO: DIE DIE DIE
             }
@@ -288,16 +295,16 @@ define(["jquery"], function(){
                 // TODO: add new active ingredient
             }
             else if (gridlist[r_head-1][c_head] == 4 ) {
-                // TODO: DIE DIE DIE
+                game_over = true;
             }
             else {
                 gridlist[r_head-1][c_head] = [2,-1];
             }
         }
         else if (direction=='down') {
-            // console.log(gridlist[r_head+1][c_head]);
+
             if (gridlist[r_head+1][c_head] == 1) {
-                //TODO: DIE DIE DIE
+                game_over = true;
             }
             else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
                 // TODO: DIE DIE DIE
@@ -311,7 +318,7 @@ define(["jquery"], function(){
 
             }
             else if (gridlist[r_head+1][c_head] == 4) {
-                // TODO: DIE DIE DIE
+                game_over = true;
             }
             else {
                 gridlist[r_head+1][c_head] = [2,-1];
@@ -322,20 +329,23 @@ define(["jquery"], function(){
     }
 
 	function animationLoop(time) {
-		update();
-		draw();
-        var delay=100;
-        setTimeout(function() {
-		    window.requestAnimationFrame(animationLoop);
-        }, delay);
+		if (game_over != true){
+		    update();
+            draw();
+            var delay=100;
+            setTimeout(function() {
+                window.requestAnimationFrame(animationLoop);
+            }, delay);
+		}
+
 	}
 
+    document.querySelector('#btn').addEventListener('click', function() {
+        init(rows, columns);
+	    // Start game!
+	    window.requestAnimationFrame(animationLoop);
+    });
 
-
-
-    init(rows, columns);
-	// Start game!
-	window.requestAnimationFrame(animationLoop);
 
 
 })
