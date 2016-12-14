@@ -53,7 +53,7 @@ define(["jquery"], function(){
         //Adds "skewer_tail"
         gridlist[12][16] = 4;
 
-        //add_active_ingredient(gridlist);
+        add_active_ingredient(gridlist);
 
 
         //Keeps track of position of the head
@@ -97,20 +97,21 @@ define(["jquery"], function(){
         return ingredient_types[Math.floor(Math.random()*(ingredient_types.length-1))];
     }
 
-//    // Add ingredient to random grid coordinate
-//    function add_active_ingredient(gridlist){
-//        var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-//
-//        while (gridlist[random_coord[1]][random_coord[0]] != 0){
-//            random_coord = get_ran_coordinate();
-//        }
-//
-//        gridlist[random_coord[1]][random_coord[2]] = [3, get_ran_ingredient()];
-//    }
+   // Add ingredient to random grid coordinate
+    function add_active_ingredient(gridlist){
+       var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
+
+       while (gridlist[random_coord[0]][random_coord[1]] != 0){
+           random_coord = get_ran_coordinate();
+       }
+       console.log(random_coord);
+       gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
+       console.log(gridlist[random_coord[0]]);
+   }
 
     //Returns random coordinate
     function get_ran_coordinate(rows, columns){
-        return [Math.floor(Math.random()*columns), Math.floor(Math.random()*rows)];
+        return [Math.floor(Math.random()*rows), Math.floor(Math.random()*columns)];
     }
 
     function get_head(gridlist){
@@ -136,6 +137,7 @@ define(["jquery"], function(){
 
 
     function draw() {
+        //context.clearRect(0,0,width,height);
         //context.clearRect(0, 0, width, height);
         //arena.draw(context);
         var image_to_draw;
@@ -145,7 +147,7 @@ define(["jquery"], function(){
                 var cell_condition = gridlist[r][c];
 
                 if (cell_condition != 0){
-
+                    context.clearRect((r*unit_length),(c*unit_length),unit_length,unit_length);
                     // If the cell is fire
                     if (cell_condition == 1){
                         continue;
@@ -161,12 +163,11 @@ define(["jquery"], function(){
 
                     // If the cell is the active ingredient
                     else if (cell_condition[0] == 3){
-                        continue;
-                        //draw_image(c, r, gridlist[r][c][1]);
+                        draw_image(c, r, gridlist[r][c][1]);
                     }
 
                      else if (cell_condition == 4){
-                        //draw_image(c, r, gridlist[r][c][1]);
+                        draw_image(c, r, condition[4]);
                         continue;
                     }
                 }
@@ -186,7 +187,10 @@ define(["jquery"], function(){
     function move_snake(gridlist){
         for(var r = 0; r < rows; r++){
            for(var c = 0; c < columns; c++){
-                if(gridlist[r][c][0] == 2){
+                if (gridlist[r][c] == 4) {
+                    gridlist[r][c] = 0;
+                }
+                else if(gridlist[r][c][0] == 2){
                     gridlist[r][c][1] = gridlist[r][c][1] +1;
                     if(gridlist[r][c][1] >= kebab_ingredients.length ){
                         gridlist[r][c] = 4;
@@ -200,7 +204,6 @@ define(["jquery"], function(){
         head_coordinate = get_head(gridlist);
         c_head = head_coordinate[1];
         r_head = head_coordinate[0];
-        console.log(head_coordinate);
         if (direction == 'left') {            
             if (gridlist[r_head][c_head-1] == 1) {
                 //TODO: DIE DIE DIE
@@ -286,14 +289,6 @@ define(["jquery"], function(){
                 gridlist[r_head+1][c_head] = [2,-1];
             }
         }
-
-        for(var r = 0; r < rows; r++){
-           for(var c = 0; c < columns; c++){
-                if (gridlist[r][c] == 4) {
-                    gridlist[r][c] = 0;
-                }
-            }
-        }
         move_snake(gridlist);
 
 
@@ -309,6 +304,10 @@ define(["jquery"], function(){
 		update();
 		draw();
 		window.requestAnimationFrame(animationLoop);
+        var delay=1000;
+        setTimeout(function() {
+  //your code to be executed after 1 second
+}, delay);
 	}
 
   
