@@ -81,9 +81,14 @@ define(["jquery"], function(){
         // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
         for(var r = 0; r < rows; r = (r+rows-1)){
-            for (var c = 0; c < columns; c = (c+columns-1)) {
+            for (var c = 0; c < columns; c++) {
                gridlist[r][c] = 1;
            }
+        }
+        for(var r = 0; r < rows; r++){
+            for(var c = 0; c < columns; c = (c+columns-1)){
+                gridlist[r][c] = 1;
+            }
         }
         return gridlist;
     }
