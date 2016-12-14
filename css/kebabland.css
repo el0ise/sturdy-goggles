@@ -1,6 +1,5 @@
 #canvas {
-	position: absolute;
-	top: 15%;
+	position: relative;
 	left: 25%;
 	background-image:url("images/grill.png");
 	width: 1000;
@@ -12,4 +11,8 @@
 	position: absolute;
 	left:400px;
 	top: 150px;
+}
+@font-face {
+    font-family: 'Char';
+    src: url('char_bb/charbb_reg.ttf');
 }

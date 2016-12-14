@@ -104,8 +104,7 @@ define(["jquery"], function(){
    // Add ingredient to random grid coordinate
     function add_active_ingredient(gridlist){
        var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-       console.log(gridlist[random_coord[0]][random_coord[1]]);
-       while (gridlist[random_coord[0]][random_coord[1]] != 0){
+       while (random_coord != NaN && gridlist[random_coord[0]][random_coord[1]] != 0){
            random_coord = get_ran_coordinate();
        }
        gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
@@ -128,14 +127,6 @@ define(["jquery"], function(){
         }
    }
 
-    function drawRotated(r,c,type){
-        context.clearRect(0,0,canvas.width,canvas.height);
-        context.save();
-        context.translate(canvas.width/2,canvas.height/2);
-        context.rotate(180*Math.PI/180);
-        draw_image(-r,-c,type);
-        context.restore();
-}
     function draw_image(r, c, type){
         var image_to_draw = new Image();
         image_to_draw.src= 'css/images/'+ type +'.png';
@@ -226,112 +217,119 @@ define(["jquery"], function(){
             }
         }
     }
-
+    function draw_score() {
+        context.font = "95px Char";
+        context.fillStyle = "#e2120b";
+        context.fillText(score, 60,100);
+    }
     function update() {
         head_coordinate = get_head(gridlist);
-        c_head = head_coordinate[1];
-        r_head = head_coordinate[0];
-        if (direction == 'left') {
-            if (gridlist[r_head][c_head-1] == 1) {
-                // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
-            }
-            else if (gridlist[r_head][c_head-1][0] == 2 && gridlist[r_head][c_head-1][1] != -1) {
-                // console.log("fuck");
-                // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
-            }
-            else if (gridlist[r_head][c_head-1][0] == 3) {
-                score += 1;
-                kebab_ingredients.push(gridlist[r_head][c_head-1][1]);
-                gridlist[r_head][c_head-1] = [2,-1];
-                add_active_ingredient(gridlist);
-                // TODO: add new active ingredient
+        if(head_coordinate != undefined){
+            c_head = head_coordinate[1];
+            r_head = head_coordinate[0];
+            if (direction == 'left') {
+                if (gridlist[r_head][c_head-1] == 1) {
+                    // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                }
+                else if (gridlist[r_head][c_head-1][0] == 2 && gridlist[r_head][c_head-1][1] != -1) {
+                    // console.log("fuck");
+                    // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                }
+                else if (gridlist[r_head][c_head-1][0] == 3) {
+                    score += 1;
+                    kebab_ingredients.push(gridlist[r_head][c_head-1][1]);
+                    gridlist[r_head][c_head-1] = [2,-1];
+                    add_active_ingredient(gridlist);
+                    // TODO: add new active ingredient
+
+                }
+                else if (gridlist[r_head][c_head-1] == 4) {
+
+                    // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                }
+                else {
+                    gridlist[r_head][c_head-1] = [2,-1];
+                }
 
             }
-            else if (gridlist[r_head][c_head-1] == 4) {
+            else if (direction=='right') {
+                if (gridlist[r_head][c_head+1] == 1) {
+                    game_over = true;
+                }
 
-                // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
-            }
-            else {
-                gridlist[r_head][c_head-1] = [2,-1];
-            }
+                else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
+                    // TODO: DIE DIE DIE
+                }
+                else if (gridlist[r_head][c_head+1][0] == 3) {
+                    score += 1;
+                    kebab_ingredients.push(gridlist[r_head][c_head+1][1]);
+                    gridlist[r_head][c_head+1] = [2,-1];
+                    add_active_ingredient(gridlist)
+                    // TODO: add new active ingredient
 
+                }
+                else if (gridlist[r_head][c_head+1] == 4) {
+                    game_over = true;
+                }
+                else {
+                    gridlist[r_head][c_head+1] = [2,-1];
+                }
+            }
+            else if (direction=='up') {
+                if (gridlist[r_head-1][c_head] == 1) {
+                    return;
+                }
+
+                else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
+                    // TODO: DIE DIE DIE
+                }
+                else if (gridlist[r_head-1][c_head][0] == 3) {
+                    score += 1;
+                    kebab_ingredients.push(gridlist[r_head-1][c_head][1]);
+                    gridlist[r_head-1][c_head] = [2, -1];
+                    add_active_ingredient(gridlist);
+                    // TODO: add new active ingredient
+                }
+                else if (gridlist[r_head-1][c_head] == 4 ) {
+                    game_over = true;
+                }
+                else {
+                    gridlist[r_head-1][c_head] = [2,-1];
+                }
+            }
+            else if (direction=='down') {
+
+                if (gridlist[r_head+1][c_head] == 1) {
+                    game_over = true;
+                }
+                else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
+                    // TODO: DIE DIE DIE
+                }
+                else if (gridlist[r_head+1][c_head][0] == 3) {
+                    score += 1;
+                    kebab_ingredients.push(gridlist[r_head+1][c_head][1]);
+                    gridlist[r_head-1][c_head] = [2,-1];
+                    add_active_ingredient(gridlist);
+                    // TODO: add new active ingredient
+
+                }
+                else if (gridlist[r_head+1][c_head] == 4) {
+                    game_over = true;
+                }
+                else {
+                    gridlist[r_head+1][c_head] = [2,-1];
+                }
+            }
+            move_snake(gridlist);
         }
-        else if (direction=='right') {
-            if (gridlist[r_head][c_head+1] == 1) {
-                game_over = true;
-            }
-
-            else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
-                // TODO: DIE DIE DIE
-            }
-            else if (gridlist[r_head][c_head+1][0] == 3) {
-                score += 1;
-                kebab_ingredients.push(gridlist[r_head][c_head+1][1]);
-                gridlist[r_head][c_head+1] = [2,-1];
-                add_active_ingredient(gridlist)
-                // TODO: add new active ingredient
-
-            }
-            else if (gridlist[r_head][c_head+1] == 4) {
-                game_over = true;
-            }
-            else {
-                gridlist[r_head][c_head+1] = [2,-1];
-            }
-        }
-        else if (direction=='up') {
-            if (gridlist[r_head-1][c_head] == 1) {
-                return;
-            }
-
-            else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
-                // TODO: DIE DIE DIE
-            }
-            else if (gridlist[r_head-1][c_head][0] == 3) {
-                score += 1;
-                kebab_ingredients.push(gridlist[r_head-1][c_head][1]);
-                gridlist[r_head-1][c_head] = [2, -1];
-                add_active_ingredient(gridlist);
-                // TODO: add new active ingredient
-            }
-            else if (gridlist[r_head-1][c_head] == 4 ) {
-                game_over = true;
-            }
-            else {
-                gridlist[r_head-1][c_head] = [2,-1];
-            }
-        }
-        else if (direction=='down') {
-
-            if (gridlist[r_head+1][c_head] == 1) {
-                game_over = true;
-            }
-            else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
-                // TODO: DIE DIE DIE
-            }
-            else if (gridlist[r_head+1][c_head][0] == 3) {
-                score += 1;
-                kebab_ingredients.push(gridlist[r_head+1][c_head][1]);
-                gridlist[r_head-1][c_head] = [2,-1];
-                add_active_ingredient(gridlist);
-                // TODO: add new active ingredient
-
-            }
-            else if (gridlist[r_head+1][c_head] == 4) {
-                game_over = true;
-            }
-            else {
-                gridlist[r_head+1][c_head] = [2,-1];
-            }
-        }
-        move_snake(gridlist);
-
     }
 
 	function animationLoop(time) {
 		if (game_over != true){
 		    update();
             draw();
+            draw_score();
+            console.log(direction);
             var delay=100;
             setTimeout(function() {
                 window.requestAnimationFrame(animationLoop);
@@ -340,12 +338,14 @@ define(["jquery"], function(){
 
 	}
 
-    document.querySelector('#btn').addEventListener('click', function() {
-        init(rows, columns);
-	    // Start game!
-	    window.requestAnimationFrame(animationLoop);
-    });
-
+    // document.querySelector('#btn').addEventListener('click', function() {
+    //     init(rows, columns);
+	   //  // Start game!
+	   //  window.requestAnimationFrame(animationLoop);
+    // });
+    init(rows, columns);
+       //  // Start game!
+    window.requestAnimationFrame(animationLoop);
 
 
 })
