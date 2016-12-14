@@ -26,12 +26,18 @@
       <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/JS/app/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+            <state relative-caret-position="458">
+              <caret line="283" column="43" selection-start-line="283" selection-start-column="43" selection-end-line="283" selection-end-column="43" />
               <folding>
-                <element signature="e#0#10449#0" expanded="false" />
-                <element signature="e#0#10449#0" expanded="false" />
-                <element signature="e#0#10449#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
+                <element signature="e#0#9913#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -543,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1481689056853</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="get_head function">
+      <created>1481690994286</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1481690994286</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -593,7 +606,8 @@
     <MESSAGE value="changes" />
     <MESSAGE value="lib files" />
     <MESSAGE value="small changes to indexing" />
-    <option name="LAST_COMMIT_MESSAGE" value="small changes to indexing" />
+    <MESSAGE value="get_head function" />
+    <option name="LAST_COMMIT_MESSAGE" value="get_head function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -682,12 +696,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JS/app/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        <state relative-caret-position="458">
+          <caret line="283" column="43" selection-start-line="283" selection-start-column="43" selection-end-line="283" selection-end-column="43" />
           <folding>
-            <element signature="e#0#10449#0" expanded="false" />
-            <element signature="e#0#10449#0" expanded="false" />
-            <element signature="e#0#10449#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
+            <element signature="e#0#9913#0" expanded="false" />
           </folding>
         </state>
       </provider>
