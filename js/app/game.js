@@ -3,20 +3,19 @@ define(["jquery"], function(){
     var context = canvas.get(0).getContext("2d");
     var width = canvas.get(0).width;
     var height = canvas.get(0).height;
-    //var arena = new Arena();
 
     var unit_length = 25;
     var score = 0;
     var speed = 4;
     var ran;
     var game_over;
+    var fps = 30;
 
     var columns = width/unit_length; // number of columns
     var rows = height/unit_length; // number of rows
     var gridlist, direction;
     var head_coordinate, r_head, c_head;
 
-    var fps = 30;
 
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
@@ -72,8 +71,8 @@ define(["jquery"], function(){
         }
     }
 
-    // Returns array of arrays and associated condition (default to 0)
     function make_gridlist(rows,columns){
+    // Returns array of arrays and associated condition (default to 0)
         var gridlist = [];
         for(var r = 0; r < rows; r++){
            gridlist[r] = Array.apply(null, new Array(columns)).map(Number.prototype.valueOf, 0);
@@ -81,8 +80,9 @@ define(["jquery"], function(){
         return gridlist;
     }
 
-        // Defines coordinates that will burn the kebab
     function make_obstructions(gridlist){
+    // Defines coordinates that will burn the kebab
+
         for(var r = 0; r < rows; r = (r+rows-1)){
             for (var c = 0; c < columns; c++) {
                gridlist[r][c] = 1;
@@ -96,8 +96,8 @@ define(["jquery"], function(){
         return gridlist;
     }
 
-    // Returns random ingredient from ingredient_types
     function get_ran_ingredient(){
+    // Returns random ingredient from ingredient_types
         return ingredient_types[Math.floor(Math.random()*(ingredient_types.length-1))];
     }
 
@@ -230,23 +230,23 @@ define(["jquery"], function(){
             r_head = head_coordinate[0];
             if (direction == 'left') {
                 if (gridlist[r_head][c_head-1] == 1) {
-                    // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head][c_head-1][0] == 2 && gridlist[r_head][c_head-1][1] != -1) {
-                    // console.log("fuck");
-                    // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head][c_head-1][0] == 3) {
                     score += 1;
                     kebab_ingredients.push(gridlist[r_head][c_head-1][1]);
                     gridlist[r_head][c_head-1] = [2,-1];
                     add_active_ingredient(gridlist);
-                    // TODO: add new active ingredient
 
                 }
                 else if (gridlist[r_head][c_head-1] == 4) {
-
-                    // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     game_over = true;
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
                 }
                 else {
                     gridlist[r_head][c_head-1] = [2,-1];
@@ -255,22 +255,24 @@ define(["jquery"], function(){
             }
             else if (direction=='right') {
                 if (gridlist[r_head][c_head+1] == 1) {
-                    game_over = true;
+                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                     game_over = true;
                 }
 
                 else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
-                    // TODO: DIE DIE DIE
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head][c_head+1][0] == 3) {
                     score += 1;
                     kebab_ingredients.push(gridlist[r_head][c_head+1][1]);
                     gridlist[r_head][c_head+1] = [2,-1];
                     add_active_ingredient(gridlist)
-                    // TODO: add new active ingredient
 
                 }
                 else if (gridlist[r_head][c_head+1] == 4) {
-                    game_over = true;
+                     game_over = true;
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
                 }
                 else {
                     gridlist[r_head][c_head+1] = [2,-1];
@@ -278,21 +280,23 @@ define(["jquery"], function(){
             }
             else if (direction=='up') {
                 if (gridlist[r_head-1][c_head] == 1) {
-                    return;
+                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                     game_over = true;
                 }
 
                 else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
-                    // TODO: DIE DIE DIE
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head-1][c_head][0] == 3) {
                     score += 1;
                     kebab_ingredients.push(gridlist[r_head-1][c_head][1]);
                     gridlist[r_head-1][c_head] = [2, -1];
                     add_active_ingredient(gridlist);
-                    // TODO: add new active ingredient
                 }
                 else if (gridlist[r_head-1][c_head] == 4 ) {
-                    game_over = true;
+                     game_over = true;
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
                 }
                 else {
                     gridlist[r_head-1][c_head] = [2,-1];
@@ -301,21 +305,23 @@ define(["jquery"], function(){
             else if (direction=='down') {
 
                 if (gridlist[r_head+1][c_head] == 1) {
-                    game_over = true;
+                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
-                    // TODO: DIE DIE DIE
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
+                     game_over = true;
                 }
                 else if (gridlist[r_head+1][c_head][0] == 3) {
                     score += 1;
                     kebab_ingredients.push(gridlist[r_head+1][c_head][1]);
                     gridlist[r_head+1][c_head] = [2,-1];
                     add_active_ingredient(gridlist);
-                    // TODO: add new active ingredient
 
                 }
                 else if (gridlist[r_head+1][c_head] == 4) {
-                    game_over = true;
+                     game_over = true;
+                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
                 }
                 else {
                     gridlist[r_head+1][c_head] = [2,-1];
@@ -339,11 +345,11 @@ define(["jquery"], function(){
 
 	}
 
-    // document.querySelector('#btn').addEventListener('click', function() {
-    //     init(rows, columns);
-	   //  // Start game!
-	   //  window.requestAnimationFrame(animationLoop);
-    // });
+     document.querySelector('#btn').addEventListener('click', function() {
+         init(rows, columns);
+	     // Start game!
+	     window.requestAnimationFrame(animationLoop);
+     });
     init(rows, columns);
        //  // Start game!
     window.requestAnimationFrame(animationLoop);
