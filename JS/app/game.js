@@ -57,8 +57,9 @@ define(["jquery"], function(){
         //add_active_ingredient(gridlist);
 
 
-//        //Keeps track of position of the head
-//        head_coordinate = get_head(gridlist);
+        //Keeps track of position of the head
+        head_coordinate = get_head(gridlist);
+        console.log(head_coordinate);
 
     }
 
@@ -111,14 +112,17 @@ define(["jquery"], function(){
 
 
 // TODO: This doesn't work right now
-//    function get_head(gridlist){
-//        for(var key in gridlist){
-//            var value = gridlist[key];
-//            if (value == [2,0]) {
-//                return key;
-//            }
-//        }
-//    }
+    function get_head(gridlist){
+       for(var row = 0; row < rows; row++){
+            for(var c = 0; c < columns; c++){
+                if(gridlist[row][c] != 2){
+                    if(gridlist[row][c][1] == 0){
+                        return([row, c]);
+                    }
+                }
+            }
+        }
+   }
 
     function draw_image(x, y, type){
         var image_to_draw = new Image();
