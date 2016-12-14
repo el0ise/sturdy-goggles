@@ -3,7 +3,7 @@ define(["jquery"], function(){
     var context = canvas.get(0).getContext("2d");
     var width = canvas.get(0).width;
     var height = canvas.get(0).height;
-
+    //var first_name = document.getElementById('firstname').value;
     var unit_length = 25;
     var score = 0;
     var speed = 4;
@@ -233,6 +233,61 @@ define(["jquery"], function(){
         context.fillStyle = "#e2120b";
         context.fillText(score, 60,100);
     }
+
+    function burn_message(){
+        context.font = "45px Char";
+        context.fillStyle = "#000000";
+        var message = "YOU LOSE! YOU JUST BURNED THE KEBAB!";
+        var message_2= "Your Kebab was "+ score+ " yeeds long!";
+        console.log(message_2);
+        context.fillText(message, 270,300);
+        context.fillText(message_2, 305,350);
+    }
+
+    function ajaxFunction(){
+    var ajaxRequest;  // The variable that makes Ajax possible!
+    try{
+
+      // Opera 8.0+, Firefox, Safari
+      ajaxRequest = new XMLHttpRequest();
+    }catch (e){
+      
+      // Internet Explorer Browsers
+      try{
+         ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+      }catch (e) {
+         
+         try{
+            ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+         }catch (e){
+         
+            // Something went wrong
+            alert("Your browser broke!");
+            return false;
+         }
+      }
+    }
+
+    // Create a function that will receive data
+    // sent from the server and will update
+    // div section in the same page.
+    ajaxRequest.onreadystatechange = function(){
+
+      if(ajaxRequest.readyState == 4){
+         var ajaxDisplay = document.getElementById('score');
+         ajaxDisplay.innerHTML = ajaxRequest.responseText;
+      }
+    }
+
+    // Now get the value from user and pass it to
+    // server script.
+    var first_name = document.getElementById('firstname').value;
+      var queryString = "?firstname=" + first_name +"&score="+score ;
+
+
+    ajaxRequest.open("GET", "ajax-example.php" + queryString, true);
+    ajaxRequest.send(null); 
+}
     function update() {
         head_coordinate = get_head(gridlist);
         if(head_coordinate != undefined){
@@ -240,11 +295,12 @@ define(["jquery"], function(){
             r_head = head_coordinate[0];
             if (direction == 'left') {
                 if (gridlist[r_head][c_head-1] == 1) {
-                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!" );
+                     //alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!" );
+                     // burn_message();
                      game_over = true;
                 }
                 else if (gridlist[r_head][c_head-1][0] == 2 && gridlist[r_head][c_head-1][1] != -1) {
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
                 else if (gridlist[r_head][c_head-1][0] == 3) {
@@ -256,7 +312,8 @@ define(["jquery"], function(){
                 }
                 else if (gridlist[r_head][c_head-1] == 4) {
                      game_over = true;
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // burn_message();
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                 }
                 else {
                     gridlist[r_head][c_head-1] = [2,-1];
@@ -265,12 +322,13 @@ define(["jquery"], function(){
             }
             else if (direction=='right') {
                 if (gridlist[r_head][c_head+1] == 1) {
-                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // burn_message();
                      game_over = true;
                 }
 
                 else if (gridlist[r_head][c_head+1][0] == 2&& gridlist[r_head][c_head+1][1] != -1) {
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
                 else if (gridlist[r_head][c_head+1][0] == 3) {
@@ -282,7 +340,7 @@ define(["jquery"], function(){
                 }
                 else if (gridlist[r_head][c_head+1] == 4) {
                      game_over = true;
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                 }
                 else {
                     gridlist[r_head][c_head+1] = [2,-1];
@@ -290,12 +348,13 @@ define(["jquery"], function(){
             }
             else if (direction=='up') {
                 if (gridlist[r_head-1][c_head] == 1) {
-                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                    // burn_message();
+                     // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
 
                 else if (gridlist[r_head-1][c_head][0] == 2 && gridlist[r_head-1][c_head][1] != -1) {
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
                 else if (gridlist[r_head-1][c_head][0] == 3) {
@@ -306,7 +365,7 @@ define(["jquery"], function(){
                 }
                 else if (gridlist[r_head-1][c_head] == 4 ) {
                      game_over = true;
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                 }
                 else {
                     gridlist[r_head-1][c_head] = [2,-1];
@@ -315,11 +374,11 @@ define(["jquery"], function(){
             else if (direction=='down') {
 
                 if (gridlist[r_head+1][c_head] == 1) {
-                     alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST BURNED THE KEBAB!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
                 else if (gridlist[r_head+1][c_head][0] == 2 && gridlist[r_head+1][c_head][1] != -1) {
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                      game_over = true;
                 }
                 else if (gridlist[r_head+1][c_head][0] == 3) {
@@ -331,7 +390,7 @@ define(["jquery"], function(){
                 }
                 else if (gridlist[r_head+1][c_head] == 4) {
                      game_over = true;
-                     alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
+                     // alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!"+ "\n" + "Your Kebab was "+ score+ " yeeds long!");
                 }
                 else {
                     gridlist[r_head+1][c_head] = [2,-1];
@@ -352,6 +411,9 @@ define(["jquery"], function(){
                 window.requestAnimationFrame(animationLoop);
             }, delay);
 		}
+        else if(game_over){
+        burn_message();
+     }
 
 	}
 
@@ -360,6 +422,7 @@ define(["jquery"], function(){
 	     // Start game!
 	     window.requestAnimationFrame(animationLoop);
      });
+     
 
 
 
