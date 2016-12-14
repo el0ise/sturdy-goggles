@@ -8,6 +8,7 @@ define(["jquery"], function(){
     var unit_length = 25;
     var score = 0;
     var speed = 4;
+    var ran;
 
     var columns = width/unit_length; // number of columns
     var rows = height/unit_length; // number of rows
@@ -18,7 +19,7 @@ define(["jquery"], function(){
     this.kebab_ingredients = [];
 
     // List of possible ingredient types
-    var ingredient_types = ["tomato", "pineapple", "red_pepper", "green_pepper", "onion", "meat"];
+    var ingredient_types = ["tomato", "pineapple", "red_pepper", "green_pepper", "onion", "meat", "skewer_head"];
 
     // List of possible cell conditions
     var condition = ["grill", "fire", "kebab", "active_ingredient","skewer_tail"];
@@ -40,19 +41,20 @@ define(["jquery"], function(){
         // Create skewer "head"
         // Push skewer into kebab_ingredients, give initial starting point
         kebab_ingredients.push("skewer_head");
-        gridlist[20][12] = [2,0];
+        gridlist[20][12] = [2 ,"skewer_head"];
 
 
         // Add 3 random ingredients
         for (var i = 0; i < 3; i++ ){
-            this.kebab_ingredients.push(get_ran_ingredient());
-            gridlist[20-(i+1)][12] = [2,i+1];
+            ran = get_ran_ingredient();
+            kebab_ingredients.push(ran);
+            gridlist[20][12-(i+1)] = [2, ran];
         }
 
-        //Adds "skewer_tail" -- TODO: Don't push to kebab_ingredients?
-        gridlist[16][12] = 4;
+        //Adds "skewer_tail"
+        gridlist[20][7] = 4;
 
-        add_active_ingredient(gridlist);
+        //add_active_ingredient(gridlist);
 
 
 //        //Keeps track of position of the head
@@ -88,7 +90,7 @@ define(["jquery"], function(){
 
     // Returns random ingredient from ingredient_types
     function get_ran_ingredient(){
-        return ingredient_types[Math.floor(Math.random()*ingredient_types.length)];
+        return ingredient_types[Math.floor(Math.random()*(ingredient_types.length-1))];
     }
 
     // Add ingredient to random grid coordinate
@@ -120,10 +122,10 @@ define(["jquery"], function(){
 
     function draw_image(x, y, type){
         var image_to_draw = new Image();
+        image_to_draw.src= 'css/images/'+ type +'.png';
         image_to_draw.onload = function(){
             context.drawImage(image_to_draw, x*unit_length, y*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
         }
-        image_to_draw.src= 'css/images/'+ ingredient_types[type] +'.png';
 
     }
 
@@ -148,7 +150,6 @@ define(["jquery"], function(){
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
-                        console.log(gridlist[r][c][1]);
                         draw_image(c, r, gridlist[r][c][1]);
 
                     }
@@ -301,7 +302,7 @@ define(["jquery"], function(){
     console.log("initial kebab ingredients", kebab_ingredients);
     console.log(gridlist);
 
-	//Start game!
+	// Start game!
 	window.requestAnimationFrame(animationLoop);
 
 
