@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="81e4c10c-7c0a-4dce-83b0-49f1897afa62" name="Default" comment="">
+    <list default="true" id="81e4c10c-7c0a-4dce-83b0-49f1897afa62" name="Default" comment="Change grill">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/css/images/skewer_head.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/css/images/skewer_tail.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/images/grill.png" afterPath="$PROJECT_DIR$/css/images/grill.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app/game.js" afterPath="$PROJECT_DIR$/js/app/game.js" />
     </list>
     <ignored path="sturdy-goggles.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +28,8 @@
       <file leaf-file-name="game.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="45" column="43" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="43" />
+            <state relative-caret-position="240">
+              <caret line="133" column="14" selection-start-line="133" selection-start-column="14" selection-end-line="133" selection-end-column="14" />
               <folding>
                 <marker date="1481742303000" expanded="true" signature="11974:12159" ph="..." />
               </folding>
@@ -48,8 +50,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+            <state relative-caret-position="45">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -74,6 +76,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="9" />
     <option name="y" value="23" />
     <option name="width" value="1225" />
     <option name="height" value="777" />
@@ -178,9 +181,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/css/images" />
       <recent name="$PROJECT_DIR$/JS/app" />
       <recent name="$PROJECT_DIR$/JS" />
-      <recent name="$PROJECT_DIR$/css/images" />
     </key>
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
@@ -567,11 +570,18 @@
       <option name="project" value="LOCAL" />
       <updated>1481742143761</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="things">
+      <created>1481742482215</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1481742482215</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1225" height="777" extended-state="6" />
+    <frame x="9" y="23" width="1225" height="777" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19428572" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -618,11 +628,11 @@
     <MESSAGE value="lib files" />
     <MESSAGE value="small changes to indexing" />
     <MESSAGE value="get_head function" />
-    <MESSAGE value="things" />
     <MESSAGE value="still buggy but make it delay" />
     <MESSAGE value="Start button" />
     <MESSAGE value="Popups when you die" />
-    <option name="LAST_COMMIT_MESSAGE" value="Popups when you die" />
+    <MESSAGE value="things" />
+    <option name="LAST_COMMIT_MESSAGE" value="things" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -686,19 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/images/grill.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/images/skewer_head.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -712,10 +709,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/css/images/grill.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/app/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="45" column="43" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="43" />
+        <state relative-caret-position="240">
+          <caret line="133" column="14" selection-start-line="133" selection-start-column="14" selection-end-line="133" selection-end-column="14" />
           <folding>
             <marker date="1481742303000" expanded="true" signature="11974:12159" ph="..." />
           </folding>
