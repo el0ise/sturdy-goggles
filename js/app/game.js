@@ -106,9 +106,7 @@ define(["jquery"], function(){
        while (gridlist[random_coord[0]][random_coord[1]] != 0){
            random_coord = get_ran_coordinate();
        }
-       console.log(random_coord);
        gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
-       console.log(gridlist[random_coord[0]]);
    }
 
     //Returns random coordinate
@@ -128,6 +126,14 @@ define(["jquery"], function(){
         }
    }
 
+    function drawRotated(r,c,type){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.save();
+    context.translate(canvas.width/2,canvas.height/2);
+    context.rotate(180*Math.PI/180);
+    draw_image(-r,-c,type);
+    context.restore();
+}
     function draw_image(r, c, type){
         var image_to_draw = new Image();
         image_to_draw.src= 'css/images/'+ type +'.png';
@@ -137,9 +143,17 @@ define(["jquery"], function(){
 
     }
 
+    function clear_image(r,c){
+        var image_to_draw = new Image();
+        image_to_draw.src= 'css/images/grill.png';
+        image_to_draw.onload = function(){
+            context.drawImage(image_to_draw, c*unit_length, r*unit_length, 25, 25,c*unit_length, r*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
+        }
+    }
+
 
     function draw() {
-        context.clearRect(0,0,width,height);
+        //context.clearRect(0,0,width,height);
         //context.clearRect(0, 0, width, height);
         //arena.draw(context);
         var image_to_draw;
@@ -149,30 +163,35 @@ define(["jquery"], function(){
                 var cell_condition = gridlist[r][c];
 
                 if (cell_condition != 0){
-                    context.clearRect((r*unit_length),(c*unit_length),unit_length,unit_length);
                     // If the cell is fire
                     if (cell_condition == 1){
-                        draw_image(r,c,condition[1]);
-                        
+                        draw_image(r,c,condition[1]);                        
                         // TODO: get image of fire
                         //draw_image(condition[1]);
                     }
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
+                        //context.clearRect(25*c,25*r,25,25);
+                        clear_image(r,c);
                         draw_image(r,c, kebab_ingredients[gridlist[r][c][1]]);
-
                     }
 
                     // If the cell is the active ingredient
                     else if (cell_condition[0] == 3){
+                        context.clearRect(25*c,25*r,25,25);
                         draw_image(r,c, gridlist[r][c][1]);
                     }
 
                      else if (cell_condition == 4){
+                        context.clearRect(25*c,25*r,25,25);
                         draw_image(r,c, condition[4]);
 
                     }
+                }
+                if(cell_condition == 0){
+                    context.clearRect(25*c,25*r,25,25);
+                    //clear_image(r,c);
                 }
             }
         }
@@ -210,6 +229,7 @@ define(["jquery"], function(){
         if (direction == 'left') {            
             if (gridlist[r_head][c_head-1] == 1) {
                 //TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head][c_head-1][0] == 2) {
                 // TODO: DIE DIE DIE
@@ -232,6 +252,7 @@ define(["jquery"], function(){
         else if (direction=='right') {
             if (gridlist[r_head][c_head+1] == 1) {
                 //TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head][c_head+1][0] == 2) {
                 // TODO: DIE DIE DIE
@@ -256,6 +277,7 @@ define(["jquery"], function(){
             }
             else if (gridlist[r_head-1][c_head][0] == 2 ) {
                 // TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head-1][c_head][0] == 3) {
                 score += 1;
@@ -274,6 +296,7 @@ define(["jquery"], function(){
             // console.log(gridlist[r_head+1][c_head]);
             if (gridlist[r_head+1][c_head] == 1) {
                 //TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head+1][c_head][0] == 2) {
                 // TODO: DIE DIE DIE
@@ -302,13 +325,13 @@ define(["jquery"], function(){
 //             TODO: Check if wall will be hit
 
     }
-    init(rows, columns);
+    
 	function animationLoop(time) {
-		update();
 		draw();
-		setInterval(function() {
-  window.requestAnimationFrame(animationLoop);
-}, 1000/5);
+        update();
+        
+		window.requestAnimationFrame(animationLoop);
+        console.log(gridlist[12]);
 
 	}
 
@@ -317,8 +340,9 @@ define(["jquery"], function(){
     // console.log(gridlist);
 
 	// Start game!
+    init(rows, columns);
+    // update();
+    //     draw();
 	window.requestAnimationFrame(animationLoop);
-
-
 })
 
