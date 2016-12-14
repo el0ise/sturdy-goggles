@@ -131,12 +131,21 @@ define(["jquery"], function(){
 
     function draw_image(r, c, type){
         var image_to_draw = new Image();
-        image_to_draw.src= 'css/images/'+ type +'.png';
-        image_to_draw.onload = function(){
-            context.drawImage(image_to_draw, c*unit_length, r*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
+        if(type == "skewer_tail" || type == "skewer_head"){
+           image_to_draw.src= 'css/images/'+ type+ "_"+direction +'.png';
+            image_to_draw.onload = function(){
+                context.drawImage(image_to_draw, c*unit_length, r*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
+            } 
         }
-
+        else{
+           image_to_draw.src= 'css/images/'+ type +'.png';
+            image_to_draw.onload = function(){
+                context.drawImage(image_to_draw, c*unit_length, r*unit_length, 25, 25);//r*unit_length,c*unit_length,25,25);
+            } 
+        }
+        
     }
+
 
     function clear_image(r,c){
         var image_to_draw = new Image();
