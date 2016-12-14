@@ -103,16 +103,17 @@ define(["jquery"], function(){
 
    // Add ingredient to random grid coordinate
     function add_active_ingredient(gridlist){
-       var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-       while (random_coord != NaN && gridlist[random_coord[0]][random_coord[1]] != 0){
-           random_coord = get_ran_coordinate();
-       }
+        var random_coord = get_ran_coordinate(rows,columns);
        gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
    }
 
     //Returns random coordinate
     function get_ran_coordinate(rows, columns){
-        return [Math.floor(Math.random()*rows), Math.floor(Math.random()*columns)];
+        var random_coord = [Math.floor(Math.random()*rows), Math.floor(Math.random()*columns)]; //random_coord is a list
+           while (random_coord != NaN && gridlist[random_coord[0]][random_coord[1]] != 0){
+               random_coord = [Math.floor(Math.random()*rows), Math.floor(Math.random()*columns)];
+           }
+        return random_coord;
     }
 
     function get_head(gridlist){
