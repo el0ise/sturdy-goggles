@@ -106,7 +106,9 @@ define(["jquery"], function(){
        while (gridlist[random_coord[0]][random_coord[1]] != 0){
            random_coord = get_ran_coordinate();
        }
+       console.log(random_coord);
        gridlist[random_coord[0]][random_coord[1]] = [3, get_ran_ingredient()];
+       console.log(gridlist[random_coord[0]]);
    }
 
     //Returns random coordinate
@@ -163,16 +165,14 @@ define(["jquery"], function(){
                 var cell_condition = gridlist[r][c];
 
                 if (cell_condition != 0){
+
                     // If the cell is fire
                     if (cell_condition == 1){
-                        draw_image(r,c,condition[1]);                        
-                        // TODO: get image of fire
-                        //draw_image(condition[1]);
+                        draw_image(r,c,condition[1]);
                     }
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
-                        //context.clearRect(25*c,25*r,25,25);
                         clear_image(r,c);
                         draw_image(r,c, kebab_ingredients[gridlist[r][c][1]]);
                     }
@@ -221,6 +221,7 @@ define(["jquery"], function(){
             }
         }
     }
+
     function update() {
 
         head_coordinate = get_head(gridlist);
@@ -228,11 +229,10 @@ define(["jquery"], function(){
         r_head = head_coordinate[0];
         if (direction == 'left') {            
             if (gridlist[r_head][c_head-1] == 1) {
-                //TODO: DIE DIE DIE
-                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
+                alert("YOU LOSE! YOU JUST BURNED THE KEBAB!");
             }
             else if (gridlist[r_head][c_head-1][0] == 2) {
-                // TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
             }
             else if (gridlist[r_head][c_head-1][0] == 3) {
                 score += 1;
@@ -242,7 +242,7 @@ define(["jquery"], function(){
 
             }
             else if (gridlist[r_head][c_head-1] == 4) {
-                // TODO: DIE DIE DIE
+                alert("YOU LOSE! YOU JUST RAN INTO YOURSELF!");
             }
             else {
                 gridlist[r_head][c_head-1] = [2,-1];
@@ -252,7 +252,6 @@ define(["jquery"], function(){
         else if (direction=='right') {
             if (gridlist[r_head][c_head+1] == 1) {
                 //TODO: DIE DIE DIE
-                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head][c_head+1][0] == 2) {
                 // TODO: DIE DIE DIE
@@ -277,7 +276,6 @@ define(["jquery"], function(){
             }
             else if (gridlist[r_head-1][c_head][0] == 2 ) {
                 // TODO: DIE DIE DIE
-                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head-1][c_head][0] == 3) {
                 score += 1;
@@ -296,7 +294,6 @@ define(["jquery"], function(){
             // console.log(gridlist[r_head+1][c_head]);
             if (gridlist[r_head+1][c_head] == 1) {
                 //TODO: DIE DIE DIE
-                alert("YOU LOSE! YOU JUST BURNED THE KEBAB");
             }
             else if (gridlist[r_head+1][c_head][0] == 2) {
                 // TODO: DIE DIE DIE
@@ -317,32 +314,24 @@ define(["jquery"], function(){
         }
         move_snake(gridlist);
 
-
-//		 TODO: Update gridlist to reflect snake moving in direction of "direction"
-//		     TODO: Check if ingredient will be hit
-//		         TODO: Add ingredient to kebab_ingredients, change the coordinate's condition from 3 to 2
-//                 TODO: Add new random ingredient to gridlist -- go through gridlist, anything that's a 0
-//             TODO: Check if wall will be hit
-
     }
-    
-	function animationLoop(time) {
-		draw();
-        update();
-        
-		window.requestAnimationFrame(animationLoop);
-        console.log(gridlist[12]);
 
+	function animationLoop(time) {
+		update();
+		draw();
+        var delay=100;
+        setTimeout(function() {
+		    window.requestAnimationFrame(animationLoop);
+        }, delay);
 	}
 
-  
-    // console.log("initial kebab ingredients", kebab_ingredients);
-    // console.log(gridlist);
 
-	// Start game!
+
+
     init(rows, columns);
-    // update();
-    //     draw();
+	// Start game!
 	window.requestAnimationFrame(animationLoop);
+
+
 })
 
