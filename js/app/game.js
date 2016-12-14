@@ -41,14 +41,14 @@ define(["jquery"], function(){
         // Create skewer "head"
         // Push skewer into kebab_ingredients, give initial starting point
         kebab_ingredients.push("skewer_head");
-        gridlist[20][12] = [2 ,"skewer_head"];
+        gridlist[20][12] = [2, 0];
 
 
         // Add 3 random ingredients
         for (var i = 0; i < 3; i++ ){
             ran = get_ran_ingredient();
             kebab_ingredients.push(ran);
-            gridlist[20][12-(i+1)] = [2, ran];
+            gridlist[20][12-(i+1)] = [2, i+1];
         }
 
         //Adds "skewer_tail"
@@ -57,8 +57,9 @@ define(["jquery"], function(){
         //add_active_ingredient(gridlist);
 
 
-//        //Keeps track of position of the head
-//        head_coordinate = get_head(gridlist);
+        //Keeps track of position of the head
+        head_coordinate = get_head(gridlist);
+        console.log(head_coordinate);
 
     }
 
@@ -98,16 +99,16 @@ define(["jquery"], function(){
         return ingredient_types[Math.floor(Math.random()*(ingredient_types.length-1))];
     }
 
-    // Add ingredient to random grid coordinate
-    function add_active_ingredient(gridlist){
-        var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-
-        while (gridlist[random_coord[1]][random_coord[0]] != 0){
-            random_coord = get_ran_coordinate();
-        }
-
-        gridlist[random_coord[1]][random_coord[2]] = [3, get_ran_ingredient()];
-    }
+//    // Add ingredient to random grid coordinate
+//    function add_active_ingredient(gridlist){
+//        var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
+//
+//        while (gridlist[random_coord[1]][random_coord[0]] != 0){
+//            random_coord = get_ran_coordinate();
+//        }
+//
+//        gridlist[random_coord[1]][random_coord[2]] = [3, get_ran_ingredient()];
+//    }
 
     //Returns random coordinate
     function get_ran_coordinate(rows, columns){
@@ -116,14 +117,17 @@ define(["jquery"], function(){
 
 
 // TODO: This doesn't work right now
-//    function get_head(gridlist){
-//        for(var key in gridlist){
-//            var value = gridlist[key];
-//            if (value == [2,0]) { //this isn't going to work
-//                return key;
-//            }
-//        }
-//    }
+    function get_head(gridlist){
+       for(var row = 0; row < rows; row++){
+            for(var c = 0; c < columns; c++){
+                if(gridlist[row][c] != 2){
+                    if(gridlist[row][c][1] == 0){
+                        return([row, c]);
+                    }
+                }
+            }
+        }
+   }
 
     function draw_image(x, y, type){
         var image_to_draw = new Image();
@@ -155,7 +159,7 @@ define(["jquery"], function(){
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
-                        draw_image(c, r, gridlist[r][c][1]);
+                        draw_image(c, r, kebab_ingredients[gridlist[r][c][1]]);
 
                     }
 
@@ -184,7 +188,7 @@ define(["jquery"], function(){
     })
 
 
-//    function update() {
+    function update() {
 //        if(typeof game_loop != "undefined") clearInterval(game_loop);
 //		game_loop = setInterval(paint, 120);
 //        head_coordinate = get_head(gridlist);
@@ -288,16 +292,16 @@ define(["jquery"], function(){
 //            }
 //
 //        }
-//		// TODO: Update gridlist to reflect snake moving in direction of "direction"
-//		    // TODO: Check if ingredient will be hit
-//		        // TODO: Add ingredient to kebab_ingredients, change the coordinate's condition from 3 to 2
-//                // TODO: Add new random ingredient to gridlist -- go through gridlist, anything that's a 0
-//            // TODO: Check if wall will be hit
-//
-//    }
+		// TODO: Update gridlist to reflect snake moving in direction of "direction"
+		    // TODO: Check if ingredient will be hit
+		        // TODO: Add ingredient to kebab_ingredients, change the coordinate's condition from 3 to 2
+                // TODO: Add new random ingredient to gridlist -- go through gridlist, anything that's a 0
+            // TODO: Check if wall will be hit
+
+    }
 
 	function animationLoop(time) {
-		//update();
+		update();
 		draw();
 		window.requestAnimationFrame(animationLoop);
 	}
