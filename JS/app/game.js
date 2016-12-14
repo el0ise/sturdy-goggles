@@ -14,11 +14,6 @@ define(["jquery"], function(){
     var gridlist, direction;
     var head_coordinate, x_head, y_head;
 
-    // Load each image
-    var tomato_image;
-    var meat_image;
-    var onion_image;
-
     // List of the ingredients in the snake
     this.kebab_ingredients = [];
 
@@ -68,8 +63,6 @@ define(["jquery"], function(){
     function print_grid(gridlist){
         for(var r = 0; r < 2; r++){
             for(var c = 0; c < columns; c ++){
-                console.log(gridlist[r][c]);
-                console.log();
             }
         }
     }
@@ -101,16 +94,12 @@ define(["jquery"], function(){
     // Add ingredient to random grid coordinate
     function add_active_ingredient(gridlist){
         var random_coord = get_ran_coordinate(rows, columns); //random_coord is a list
-        console.log(random_coord);
 
         while (gridlist[random_coord[1]][random_coord[0]] != 0){
             random_coord = get_ran_coordinate();
-            console.log(gridlist[random_coord[1]][random_coord[0]]);
-
         }
 
         gridlist[random_coord[1]][random_coord[2]] = [3, get_ran_ingredient()];
-        console.log(gridlist[random_coord[1]][random_coord[2]]);
     }
 
     //Returns random coordinate
@@ -140,7 +129,7 @@ define(["jquery"], function(){
 
 
     function draw() {
-        context.clearRect(0, 0, width, height);
+        //context.clearRect(0, 0, width, height);
         //arena.draw(context);
         var image_to_draw;
         // TODO: Iterate through gridlist and draw according to condition
@@ -159,6 +148,7 @@ define(["jquery"], function(){
 
                     // If the cell is part of the kebab
                     else if (cell_condition[0] == 2){
+                        console.log(gridlist[r][c][1]);
                         draw_image(c, r, gridlist[r][c][1]);
 
                     }
@@ -307,6 +297,9 @@ define(["jquery"], function(){
 	}
 
     init(rows, columns);
+
+    console.log("initial kebab ingredients", kebab_ingredients);
+    console.log(gridlist);
 
 	//Start game!
 	window.requestAnimationFrame(animationLoop);
