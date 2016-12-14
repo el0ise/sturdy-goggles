@@ -1,6 +1,15 @@
 #canvas {
+	position: absolute;
+	top: 15%;
+	left: 25%;
 	background-image:url("images/grill.png");
 	width: 1000;
 	height: 600;
 	border: 1px solid #000000;
+}
+
+.middle_column{
+	position: absolute;
+	left:400px;
+	top: 150px;
 }
